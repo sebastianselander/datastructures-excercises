@@ -8,8 +8,6 @@ public class Main {
     private static Scanner sc = new Scanner(System.in);
     private static final int choice = sc.nextInt();
     private static int computerGuess;
-    private static int right = 10000;
-    private static int left = 0;
 
     public static void main(String[] args) {
         while (computerGuess != choice){
