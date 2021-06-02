@@ -3,14 +3,14 @@ package stacks_and_queues_exercises;
 import java.util.Arrays;
 import java.util.List;
 
-public class BoundedQueueCircular<E> implements Queue<E>{
+public class BoundedQueue<E> implements Queue<E>{
 
     private int size = 0;
     private int front = 0;
     private int back = 0;
     private Object[] array;
 
-    public BoundedQueueCircular(int capacity){
+    public BoundedQueue(int capacity){
         this.array = new Object[capacity];
     }
 
@@ -35,6 +35,7 @@ public class BoundedQueueCircular<E> implements Queue<E>{
     @Override
     public int size() {
         return size;
+        //can't do (front-back) % capacity because when it's full (front-back) = 0.
     }
 
     private int increment(int c){

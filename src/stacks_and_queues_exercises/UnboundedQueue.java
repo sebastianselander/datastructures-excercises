@@ -4,46 +4,41 @@ import java.util.Arrays;
 
 public class UnboundedQueue<E> implements Queue<E> {
 
-    private int size = 0;
-    private int front = 0;
-    private int back = 0;
-    private Object[] array;
+    private int capacity;
+    private BoundedQueue<E> bq;
 
-    public UnboundedQueue() {
-        this.array = new Object[10];
+    public UnboundedQueue(){
+        this.capacity = 10;
+        this.bq = new BoundedQueue<>(capacity);
     }
 
     @Override
     public void enqueue(E item) {
-        if (size == array.length) {
-            copy();
+        if (size() <= 0) {
+            this.bq = doubleQueue();
         }
-        array[back] = item;
-        back++;
-        size++;
+        bq.enqueue(item);
     }
 
     @Override
     public E dequeue() {
-        E item = (E) array[front];
-        array[front] = null;
-        front++;
-        size--;
-        return item;
+        return bq.dequeue();
     }
 
     @Override
     public int size() {
-        return size;
+        return bq.size();
     }
 
-    private void copy() {
-        Object[] newArray = new Object[array.length * 2];
-        System.arraycopy(array, 0, newArray, 0, array.length);
-        array = newArray;
+    private BoundedQueue<E> doubleQueue(){
+        BoundedQueue<E> newQ = new BoundedQueue<>(capacity*2);
+        for (int i = 0; i < bq.size(); i++){
+            newQ.enqueue(bq.dequeue());
+        }
+        return newQ;
     }
 
     public String toString(){
-        return Arrays.toString(array);
+        return bq.toString();
     }
 }
